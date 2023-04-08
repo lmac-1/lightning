@@ -14,7 +14,7 @@ const WelcomeScreen = ({ setStep }) => {
         Put your English speaking skills to the test
       </div>
       <Button onClick={() => setStep("instructions")} arrow={true}>
-        Let's go{" "}
+        Let&apos;s go{" "}
       </Button>
     </section>
   );
