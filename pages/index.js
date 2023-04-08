@@ -1,19 +1,18 @@
+import Instructions from "@/components/Instructions";
+import WelcomeScreen from "@/components/WelcomeScreen";
+import Countdown from "@/components/Countdown";
+import { useState } from "react";
+import Game from "@/components/Game";
+
 export default function Home() {
+  const [step, setStep] = useState("game");
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <section className="text-center">
-        <h1
-          className={
-            "text-8xl font-bold -tracking-[5px] text-lightning-green mb-4"
-          }
-        >
-          Lightning
-        </h1>
-        <div className="text-lightning-green-dark">
-          Put your English skills to the test
-        </div>
-        <button>Let's go</button>
-      </section>
+      {step === "welcome" && <WelcomeScreen setStep={setStep} />}
+      {step === "instructions" && <Instructions setStep={setStep} />}
+      {step === "countdown" && <Countdown setStep={setStep} />}
+      {step === "game" && <Game setStep={setStep} />}
     </div>
   );
 }
