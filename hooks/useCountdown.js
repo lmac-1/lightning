@@ -2,33 +2,38 @@ import { useState, useEffect } from "react";
 
 export default function useCountdown(totalSeconds) {
   const [seconds, setSeconds] = useState(totalSeconds);
-  const [isActive, setIsActive] = useState(false);
+  const [isTimerActive, setIsTimerActive] = useState(false);
 
   useEffect(() => {
-    let interval = null;
+    let timerInterval = null;
 
     if (seconds === 0) {
-      setIsActive(false);
+      setIsTimerActive(false);
     }
 
-    if (isActive) {
-      interval = setInterval(() => {
+    if (isTimerActive) {
+      timerInterval = setInterval(() => {
         setSeconds((s) => s - 1);
       }, 1000);
-    } else if (!isActive || seconds === 0) {
-      clearInterval(interval);
+    } else if (!isTimerActive || seconds === 0) {
+      clearInterval(timerInterval);
     }
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
+    return () => clearInterval(timerInterval);
+  }, [isTimerActive, seconds]);
+
+  useEffect(() => {
+    setSeconds(totalSeconds);
+    setIsTimerActive(false);
+  }, [totalSeconds]);
 
   const toggleTimer = () => {
-    setIsActive(!isActive);
+    setIsTimerActive(!isTimerActive);
   };
 
   const resetTimer = () => {
-    setIsActive(false);
+    setIsTimerActive(false);
     setSeconds(totalSeconds);
   };
 
-  return { seconds, isActive, toggleTimer, resetTimer };
+  return { seconds, isTimerActive, toggleTimer, resetTimer };
 }

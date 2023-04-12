@@ -1,9 +1,12 @@
 import Button from "./Button";
-import useCountdown from "@/hooks/useCountdown";
 
-const Timer = ({ totalSeconds }) => {
-  const { seconds, isActive, toggleTimer, resetTimer } =
-    useCountdown(totalSeconds);
+const Timer = ({
+  totalSeconds,
+  isTimerActive,
+  resetTimer,
+  seconds,
+  toggleTimer,
+}) => {
   return (
     <div>
       <p className="text-[10rem] leading-none text-lightning-green my-4">
@@ -12,11 +15,11 @@ const Timer = ({ totalSeconds }) => {
       <div className="flex flex-col gap-2">
         <div className="flex gap-4">
           <Button onClick={toggleTimer} disabled={seconds === 0}>
-            {!isActive ? "Start" : "Pause"}
+            {!isTimerActive ? "Start" : "Pause"}
           </Button>
           <Button
             onClick={resetTimer}
-            disabled={isActive || seconds === totalSeconds}
+            disabled={isTimerActive || seconds === totalSeconds}
           >
             Reset
           </Button>
