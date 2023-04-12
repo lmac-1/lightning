@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Button from "./Button";
 import Select from "./Select";
 
-const MyDialog = ({ isOpen, setIsOpen }) => {
+const MyDialog = ({ isOpen, setIsOpen, settings, updateSettings }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
