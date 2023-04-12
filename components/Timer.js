@@ -21,7 +21,11 @@ const Timer = ({
       </p>
       <div className="flex flex-col gap-2">
         <div className="flex gap-4">
-          <Button onClick={toggleTimer} disabled={seconds === 0}>
+          <Button
+            className="animate-bounce-short"
+            onClick={toggleTimer}
+            disabled={seconds === 0}
+          >
             {!isTimerActive ? "Start" : "Pause"}
           </Button>
           <Button

@@ -17,6 +17,10 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-inter)"],
       },
+      animation: {
+        // Bounces 3 times and returns to position (3.5 seconds)
+        "bounce-short": "bounce 1s ease-in-out 3.5",
+      },
     },
   },
   plugins: [],
