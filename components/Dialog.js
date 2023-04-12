@@ -1,9 +1,32 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "./Button";
 import Select from "./Select";
+import { questions } from "@/config/settingsQuestions";
+import findDefaultValue from "@/utils/findDefaultValue";
 
 const MyDialog = ({ isOpen, setIsOpen, settings, updateSettings }) => {
+  const { seconds, questions, difficulty } = questions;
+
+  const [totalSeconds, setTotalSeconds] = useState(() =>
+    findDefaultValue(seconds.options, settings.totalSeconds)
+  );
+  const [totalQuestions, setTotalQuestions] = useState(() =>
+    findDefaultValue(questions.options, settings.totalQuestions)
+  );
+  const [level, setLevel] = useState(() =>
+    findDefaultValue(difficulty.options, settings.level)
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateSettings({
+      totalSeconds: totalSeconds.value,
+      totalQuestions: totalQuestions.value,
+      level: level.value,
+    });
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -42,38 +65,32 @@ const MyDialog = ({ isOpen, setIsOpen, settings, updateSettings }) => {
                 Adjust the settings of your game to suit your preferences and
                 needs.
               </Dialog.Description>
-              <div className="mb-5">
-                <Select
-                  question="Speaking time:"
-                  options={[
-                    { name: "30 seconds", value: 30 },
-                    { name: "60 seconds", value: 60 },
-                    { name: "120 seconds", value: 120 },
-                  ]}
-                />
-                <Select
-                  question="Total questions"
-                  options={[
-                    { name: "1", value: 1 },
-                    { name: "5", value: 5 },
-                    { name: "10", value: 10 },
-                    { name: "Unlimited", value: "unlimited" },
-                  ]}
-                />
-                <Select
-                  question="Level"
-                  options={[
-                    { name: "Easy", value: "easy" },
-                    { name: "Medium", value: "medium" },
-                    { name: "Hard", value: "hard" },
-                    { name: "All", value: "all" },
-                  ]}
-                />
-              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-5">
+                  <Select
+                    question={questions.totalSeconds.questionText}
+                    options={questions.totalSeconds.options}
+                    selected={totalSeconds}
+                    onSelectChange={setTotalSeconds}
+                  />
+                  <Select
+                    question={questions.totalQuestions.questionText}
+                    options={questions.totalQuestions.options}
+                    selected={totalQuestions}
+                    onSelectChange={setTotalQuestions}
+                  />
+                  <Select
+                    question={questions.level.questionText}
+                    options={questions.level.options}
+                    selected={level}
+                    onSelectChange={setLevel}
+                  />
+                </div>
 
-              <Button className="w-full" onClick={() => setIsOpen(false)}>
-                Save
-              </Button>
+                <Button className="w-full" onClick={() => setIsOpen(false)}>
+                  Save
+                </Button>
+              </form>
             </Dialog.Panel>
           </Transition.Child>
         </div>
