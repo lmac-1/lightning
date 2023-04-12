@@ -14,12 +14,12 @@ export default function useCountdown(totalSeconds) {
     if (isActive) {
       interval = setInterval(() => {
         setSeconds((s) => s - 1);
-      }, 50);
+      }, 1000);
     } else if (!isActive || seconds === 0) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive]);
+  }, [isActive, seconds]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
