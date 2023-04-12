@@ -8,12 +8,15 @@ const Instructions = ({ setStep }) => {
       </h2>
       <div className="mb-8">
         <p className="text-lightning-green-dark mb-3">
-          We will be doing an activity called lightning questions to practice
-          your English speaking skills under pressure.
+          We will be doing an activity called{" "}
+          <span className="tracking-wider font-semibold mx-1">
+            lightning questions
+          </span>{" "}
+          to practice your English speaking skills under pressure.
         </p>
         <p className="text-lightning-green-dark mb-3">
-          A question will appear on screen, read it quickly and then start
-          speaking until the timer reaches 0.
+          A question will appear on screen – read it, then start the timer and
+          start speaking until the timer reaches 0.
         </p>
       </div>
       <Button
