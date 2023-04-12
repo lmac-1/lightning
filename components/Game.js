@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Cog8ToothIcon } from "@heroicons/react/20/solid";
-import Button from "./Button";
 import Level from "./Level";
 import Dialog from "./Dialog";
 import Timer from "./Timer";

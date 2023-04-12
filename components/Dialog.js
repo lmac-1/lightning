@@ -2,11 +2,11 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "./Button";
 import Select from "./Select";
-import { questions } from "@/config/settingsQuestions";
+import settingsQuestions from "@/config/settingsQuestions";
 import findDefaultValue from "@/utils/findDefaultValue";
 
 const MyDialog = ({ isOpen, setIsOpen, settings, updateSettings }) => {
-  const { seconds, questions, difficulty } = questions;
+  const { seconds, questions, difficulty } = settingsQuestions;
 
   const [totalSeconds, setTotalSeconds] = useState(() =>
     findDefaultValue(seconds.options, settings.totalSeconds)
@@ -68,20 +68,20 @@ const MyDialog = ({ isOpen, setIsOpen, settings, updateSettings }) => {
               <form onSubmit={handleSubmit}>
                 <div className="mb-5">
                   <Select
-                    question={questions.totalSeconds.questionText}
-                    options={questions.totalSeconds.options}
+                    question={seconds.questionText}
+                    options={seconds.options}
                     selected={totalSeconds}
                     onSelectChange={setTotalSeconds}
                   />
                   <Select
-                    question={questions.totalQuestions.questionText}
-                    options={questions.totalQuestions.options}
+                    question={questions.questionText}
+                    options={questions.options}
                     selected={totalQuestions}
                     onSelectChange={setTotalQuestions}
                   />
                   <Select
-                    question={questions.level.questionText}
-                    options={questions.level.options}
+                    question={difficulty.questionText}
+                    options={difficulty.options}
                     selected={level}
                     onSelectChange={setLevel}
                   />

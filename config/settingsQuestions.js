@@ -1,4 +1,4 @@
-export const questions = {
+const settingsQuestions = {
   seconds: {
     questionText: "Speaking time:",
     options: [
@@ -26,3 +26,5 @@ export const questions = {
     ],
   },
 };
+
+export default settingsQuestions;
