@@ -1,16 +1,25 @@
 import Instructions from "@/components/Instructions";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import Countdown from "@/components/Countdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Game from "@/components/Game";
+import data from "@/data/db";
+import getGameQuestions from "@/utils/getGameQuestions";
 
 export default function Home() {
-  const [step, setStep] = useState("game");
+  const [step, setStep] = useState("welcome");
   const [gameSettings, setGameSettings] = useState({
     totalSeconds: 60,
     totalQuestions: 10,
     level: "all",
   });
+  const [gameQuestions, setGameQuestions] = useState([]);
+
+  // Sets the questions for the game based on settings
+  useEffect(() => {
+    const { totalQuestions, level } = gameSettings;
+    setGameQuestions(getGameQuestions(data, totalQuestions, level));
+  }, [gameSettings]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -19,9 +28,9 @@ export default function Home() {
       {step === "countdown" && <Countdown setStep={setStep} />}
       {step === "game" && (
         <Game
-          setStep={setStep}
           settings={gameSettings}
           updateSettings={setGameSettings}
+          questions={gameQuestions}
         />
       )}
     </div>

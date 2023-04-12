@@ -6,7 +6,14 @@ const Timer = ({
   resetTimer,
   seconds,
   toggleTimer,
+  nextQuestion,
+  gameOver,
 }) => {
+  const handleNextQuestion = () => {
+    nextQuestion((q) => q + 1);
+    resetTimer();
+  };
+
   return (
     <div>
       <p className="text-[10rem] leading-none text-lightning-green my-4">
@@ -24,7 +31,12 @@ const Timer = ({
             Reset
           </Button>
         </div>
-        <Button disabled={seconds != 0}>Next question</Button>
+        <Button
+          onClick={handleNextQuestion}
+          disabled={seconds != 0 || gameOver}
+        >
+          {!gameOver ? "Next question" : "Game over!"}
+        </Button>
       </div>
     </div>
   );

@@ -5,11 +5,13 @@ import Dialog from "./Dialog";
 import Timer from "./Timer";
 import useCountdown from "@/hooks/useCountdown";
 
-const Game = ({ setStep, settings, updateSettings }) => {
+const Game = ({ settings, updateSettings, questions }) => {
   const [showModal, setShowModal] = useState(false);
   const { seconds, isTimerActive, toggleTimer, resetTimer } = useCountdown(
     settings.totalSeconds
   );
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const gameOver = questionIndex === questions.length - 1;
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -22,7 +24,7 @@ const Game = ({ setStep, settings, updateSettings }) => {
       <button className="ml-auto" onClick={handleOpenModal}>
         <Cog8ToothIcon className="h-6 w-6 text-lightning-green-dark" />
       </button>
-      <Level level="medium" />
+      <Level level={questions[questionIndex].level} />
       <Dialog
         isOpen={showModal}
         setIsOpen={setShowModal}
@@ -30,8 +32,7 @@ const Game = ({ setStep, settings, updateSettings }) => {
         updateSettings={updateSettings}
       />
       <h1 className="text-lightning-green-dark text-4xl leading-normal">
-        If you were going to travel the world, would you prefer to do it alone
-        or with friends?
+        {questions[questionIndex].question}
       </h1>
       <Timer
         seconds={seconds}
@@ -39,6 +40,8 @@ const Game = ({ setStep, settings, updateSettings }) => {
         toggleTimer={toggleTimer}
         resetTimer={resetTimer}
         totalSeconds={settings.totalSeconds}
+        nextQuestion={setQuestionIndex}
+        gameOver={gameOver}
       />
     </section>
   );
