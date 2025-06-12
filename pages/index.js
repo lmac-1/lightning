@@ -1,18 +1,27 @@
-import Instructions from "@/components/Instructions";
-import WelcomeScreen from "@/components/WelcomeScreen";
-import Countdown from "@/components/Countdown";
-import { useEffect, useState } from "react";
-import Game from "@/components/Game";
-import data from "@/data/db";
-import getGameQuestions from "@/utils/getGameQuestions";
+import Instructions from '@/components/Instructions';
+import WelcomeScreen from '@/components/WelcomeScreen';
+import Countdown from '@/components/Countdown';
+import { useEffect, useState } from 'react';
+import Game from '@/components/Game';
+import data from '@/data/db';
+import getGameQuestions from '@/utils/getGameQuestions';
+
+const DEFAULT_SETTINGS = {
+  totalSeconds: 60,
+  totalQuestions: 10,
+  level: 'all',
+};
+
+export const STEP = {
+  WELCOME: 'welcome',
+  INSTRUCTIONS: 'instructions',
+  COUNTDOWN: 'countdown',
+  GAME: 'game',
+};
 
 export default function Home() {
-  const [step, setStep] = useState("welcome");
-  const [gameSettings, setGameSettings] = useState({
-    totalSeconds: 60,
-    totalQuestions: 10,
-    level: "all",
-  });
+  const [step, setStep] = useState(STEP.WELCOME);
+  const [gameSettings, setGameSettings] = useState(DEFAULT_SETTINGS);
   const [gameQuestions, setGameQuestions] = useState([]);
 
   // Sets the questions for the game based on settings
@@ -23,10 +32,16 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      {step === "welcome" && <WelcomeScreen setStep={setStep} />}
-      {step === "instructions" && <Instructions setStep={setStep} />}
-      {step === "countdown" && <Countdown setStep={setStep} />}
-      {step === "game" && (
+      {step === STEP.WELCOME && <WelcomeScreen setStep={setStep} />}
+      {step === STEP.INSTRUCTIONS && (
+        <Instructions
+          setStep={setStep}
+          settings={gameSettings}
+          updateSettings={setGameSettings}
+        />
+      )}
+      {step === STEP.COUNTDOWN && <Countdown setStep={setStep} />}
+      {step === STEP.GAME && (
         <Game
           settings={gameSettings}
           updateSettings={setGameSettings}

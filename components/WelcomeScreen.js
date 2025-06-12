@@ -1,11 +1,12 @@
-import Button from "@/components/Button";
+import Button from '@/components/Button';
+import { STEP } from '@/pages';
 
 const WelcomeScreen = ({ setStep }) => {
   return (
     <section className="text-center">
       <h1
         className={
-          "text-6xl sm:text-8xl font-bold -tracking-[3px] sm:-tracking-[5px] text-lightning-green mb-4"
+          'text-6xl sm:text-8xl font-bold -tracking-[3px] sm:-tracking-[5px] text-lightning-green mb-4'
         }
       >
         Lightning
@@ -13,8 +14,8 @@ const WelcomeScreen = ({ setStep }) => {
       <div className="text-lightning-green-dark mb-6">
         Put your English speaking skills to the test
       </div>
-      <Button onClick={() => setStep("instructions")} arrow={true}>
-        Let&apos;s go{" "}
+      <Button onClick={() => setStep(STEP.INSTRUCTIONS)} arrow={true}>
+        Let&apos;s go{' '}
       </Button>
     </section>
   );

@@ -1,11 +1,18 @@
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import Button from "./Button";
-import Select from "./Select";
-import settingsQuestions from "@/config/settingsQuestions";
-import findDefaultValue from "@/utils/findDefaultValue";
+import { Fragment, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import Button from './Button';
+import Select from './Select';
+import settingsQuestions from '@/config/settingsQuestions';
+import findDefaultValue from '@/utils/findDefaultValue';
+import { Cog8ToothIcon } from '@heroicons/react/20/solid';
 
-const MyDialog = ({ isOpen, setIsOpen, settings, updateSettings }) => {
+const MyDialog = ({ settings, updateSettings, onOpen }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsOpen(true);
+    onOpen && onOpen();
+  };
+
   const { seconds, questions, difficulty } = settingsQuestions;
 
   const [totalSeconds, setTotalSeconds] = useState(() =>
@@ -28,74 +35,79 @@ const MyDialog = ({ isOpen, setIsOpen, settings, updateSettings }) => {
   };
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        onClose={() => setIsOpen(false)}
-        className="relative z-50"
-      >
-        {/* The background, rendered as a fixed sibling to the panel container */}
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+    <>
+      <button className="ml-auto block mb-2" onClick={handleOpenModal}>
+        <Cog8ToothIcon className="h-6 w-6 text-lightning-green-dark" />
+      </button>
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          onClose={() => setIsOpen(false)}
+          className="relative z-50"
         >
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 flex items-center justify-center">
+          {/* The background, rendered as a fixed sibling to the panel container */}
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
             leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <Dialog.Panel className="w-full max-w-sm rounded-xl bg-[#effaf4] px-8 py-6 shadow-xl text-lightning-green-dark">
-              <Dialog.Title className="font-semibold text-xl mb-3">
-                Personalise your game
-              </Dialog.Title>
-              <Dialog.Description className="mb-4">
-                Adjust the settings of your game to suit your preferences and
-                needs.
-              </Dialog.Description>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-5">
-                  <Select
-                    question={seconds.questionText}
-                    options={seconds.options}
-                    selected={totalSeconds}
-                    onSelectChange={setTotalSeconds}
-                  />
-                  <Select
-                    question={questions.questionText}
-                    options={questions.options}
-                    selected={totalQuestions}
-                    onSelectChange={setTotalQuestions}
-                  />
-                  <Select
-                    question={difficulty.questionText}
-                    options={difficulty.options}
-                    selected={level}
-                    onSelectChange={setLevel}
-                  />
-                </div>
-
-                <Button className="w-full" onClick={() => setIsOpen(false)}>
-                  Save
-                </Button>
-              </form>
-            </Dialog.Panel>
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
           </Transition.Child>
-        </div>
-      </Dialog>
-    </Transition>
+
+          <div className="fixed inset-0 flex items-center justify-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full max-w-sm rounded-xl bg-[#effaf4] px-8 py-6 shadow-xl text-lightning-green-dark">
+                <Dialog.Title className="font-semibold text-xl mb-3">
+                  Personalise your game
+                </Dialog.Title>
+                <Dialog.Description className="mb-4">
+                  Adjust the settings of your game to suit your preferences and
+                  needs.
+                </Dialog.Description>
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-5">
+                    <Select
+                      question={seconds.questionText}
+                      options={seconds.options}
+                      selected={totalSeconds}
+                      onSelectChange={setTotalSeconds}
+                    />
+                    <Select
+                      question={questions.questionText}
+                      options={questions.options}
+                      selected={totalQuestions}
+                      onSelectChange={setTotalQuestions}
+                    />
+                    <Select
+                      question={difficulty.questionText}
+                      options={difficulty.options}
+                      selected={level}
+                      onSelectChange={setLevel}
+                    />
+                  </div>
+
+                  <Button className="w-full" onClick={() => setIsOpen(false)}>
+                    Save
+                  </Button>
+                </form>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
   );
 };
 

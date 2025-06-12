@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { STEP } from '@/pages';
+import { useEffect, useState } from 'react';
 
 const Countdown = ({ seconds = 3, setStep }) => {
   const [count, setCount] = useState(seconds);
 
   useEffect(() => {
     if (count === 0) {
-      setStep("game");
+      setStep(STEP.GAME);
       return;
     }
 
