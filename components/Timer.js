@@ -35,10 +35,7 @@ const Timer = ({
             Reset
           </Button>
         </div>
-        <Button
-          onClick={handleNextQuestion}
-          disabled={seconds != 0 || gameOver}
-        >
+        <Button onClick={handleNextQuestion} disabled={gameOver}>
           {!gameOver ? "Next question" : "Game over!"}
         </Button>
       </div>
